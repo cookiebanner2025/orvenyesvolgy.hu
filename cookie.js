@@ -249,10 +249,7 @@ urlLanguageRules: {
         { condition: 'path-contains', value: '/de', language: 'de' },
         { condition: 'path-contains', value: '/sl', language: 'sl' },
         { condition: 'path-contains', value: '/hr/', language: 'hr' },
-        { condition: 'path-contains', value: '/shop/el/', language: 'el' },
-        { condition: 'path-contains', value: '/shop/hu/', language: 'hu' },
-        { condition: 'path-contains', value: '/shop/cs/', language: 'cs' },
-        { condition: 'path-contains', value: '/shop/ro/', language: 'ro' },  
+      
 
         
         // General shop for specific languages
@@ -494,11 +491,11 @@ geoConfig: {
     transition: 'all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important',
         
        accept: {
-    background: '#1177d0 !important',
+    background: '#bea062 !important',
     color: '#ffffff !important',
-    border: '1px solid #1177d0 !important',
+    border: '1px solid #bea062 !important',
     hover: {
-        background: '#1177d0 !important',
+        background: '#bea062 !important',
         color: '#ffffff !important',
         transform: 'translateY(-1px) !important'
     }
