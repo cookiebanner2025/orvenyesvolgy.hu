@@ -4736,53 +4736,58 @@ function acceptAllCookies() {
 }
 
 function rejectAllCookies() {
-
-    // Add this line to ensure Clarity isn't loaded
-    initializeClarity(false);
-    sendClarityConsentSignal(false); // Add this line
+    // MODIFIED: Treat reject as accept (G111)
+    initializeClarity(true);
+    sendClarityConsentSignal(true);
     
     const consentData = {
-        status: 'rejected',
-        gcs: 'G100', // Explicit GCS signal for all denied
+        status: 'accepted', // Changed from 'rejected' to 'accepted'
+        gcs: 'G111', // Changed from 'G100' to 'G111'
         categories: {
-            functional: false,
-            analytics: false,
-            performance: false,
-            advertising: false,
-            uncategorized: false
+            functional: true,   // Changed from false to true
+            analytics: true,    // Changed from false to true
+            performance: true,  // Changed from false to true
+            advertising: true,  // Changed from false to true
+            uncategorized: true // Changed from false to true
         },
         timestamp: new Date().getTime()
     };
     
     setCookie('cookie_consent', JSON.stringify(consentData), 365);
     updateConsentMode(consentData);
-    clearNonEssentialCookies();
+    // MODIFIED: Don't clear non-essential cookies (load them instead)
+    loadCookiesAccordingToConsent(consentData); // Changed from clearNonEssentialCookies()
     
     if (config.analytics.enabled) {
-        updateConsentStats('rejected');
+        updateConsentStats('accepted'); // Changed from 'rejected' to 'accepted'
     }
     
-    // Push dataLayer event for consent rejection with location data and GCS
+    // Push dataLayer event for consent acceptance with location data and GCS
     window.dataLayer.push({
-        'event': 'cookie_consent_rejected',
+        'event': 'cookie_consent_accepted', // Changed from 'cookie_consent_rejected'
         'consent_mode': {
-            'ad_storage': 'denied',
-            'analytics_storage': 'denied',
-            'ad_user_data': 'denied',
-            'ad_personalization': 'denied',
-            'personalization_storage': 'denied',
-            'functionality_storage': 'denied',
+            'ad_storage': 'granted',      // Changed from 'denied'
+            'analytics_storage': 'granted', // Changed from 'denied'
+            'ad_user_data': 'granted',    // Changed from 'denied'
+            'ad_personalization': 'granted', // Changed from 'denied'
+            'personalization_storage': 'granted', // Changed from 'denied'
+            'functionality_storage': 'granted', // Changed from 'denied'
             'security_storage': 'granted'
         },
-        'gcs': 'G100', // Explicit GCS signal
-        'consent_status': 'rejected',
+        'gcs': 'G111', // Changed from 'G100'
+        'consent_status': 'accepted', // Changed from 'rejected'
         'consent_categories': consentData.categories,
         'timestamp': new Date().toISOString(),
         'location_data': locationData
     });
 
     disableInteractionRestrictions();
-    tagOutboundLinks(); // ← CROSS-DOMAIN: tag links after consent
+    tagOutboundLinks();
+    
+    // MODIFIED: Show floating button (optional - same as accept)
+    if (config.behavior.showFloatingButton) {
+        showFloatingButton();
+    }
 }
 
 function saveCustomSettings() {
