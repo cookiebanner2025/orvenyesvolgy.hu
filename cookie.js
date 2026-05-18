@@ -539,13 +539,13 @@ geoConfig: {
     // Floating button styling
     floatingButtonStyle: {
         size: '50px',
-        background: '#1177d0 ',
+        background: '#bea062 ',
         iconColor: '#ffffff',
         border: '2px solid #ffffff',
         borderRadius: '50%',
         boxShadow: '0 6px 20px rgba(0, 0, 0, 0.2)',
         hover: {
-            background: '#1177d0',
+            background: '#bea062',
             transform: 'translateY(-3px) scale(1.05)',
             boxShadow: '0 8px 25px rgba(0, 0, 0, 0.3)'
         }
