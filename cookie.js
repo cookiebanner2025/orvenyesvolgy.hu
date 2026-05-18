@@ -182,7 +182,7 @@ clarityConfig: {
             enabled: true,          // Turn this ON/OFF
             preventScroll: false,    // Turn scroll blocking ON/OFF
             preventClick: true,     // Turn click blocking ON/OFF
-            blurBackground: true,   // Turn blur effect ON/OFF
+            blurBackground: false,   // Turn blur effect ON/OFF
             blurDensity: '5px'      // Control blur intensity
         },
         
@@ -228,9 +228,9 @@ clarityConfig: {
     
     // Language configuration
     languageConfig: {
-        defaultLanguage: 'en',
+        defaultLanguage: 'hu',
         availableLanguages: [], // Only en and fr as requested
-        showLanguageSelector: true,
+        showLanguageSelector: false,
         autoDetectLanguage: true
     },
 
@@ -244,15 +244,15 @@ urlLanguageRules: {
         // ===========================================================================
         
         // Path contains (Most Flexible)
-        { condition: 'path-contains', value: 'shop', language: 'nl' },
-     /**   { condition: 'path-contains', value: '/shop/pl/', language: 'pl' },
-        { condition: 'path-contains', value: '/shop/sv/', language: 'sv' },
-        { condition: 'path-contains', value: '/shop/da/', language: 'da' },
-        { condition: 'path-contains', value: '/shop/fi/', language: 'fi' },
+        { condition: 'path-contains', value: '/', language: 'hu' },
+       { condition: 'path-contains', value: 'en', language: 'en' },
+        { condition: 'path-contains', value: '/de', language: 'de' },
+        { condition: 'path-contains', value: '/sl', language: 'sl' },
+        { condition: 'path-contains', value: '/hr/', language: 'hr' },
         { condition: 'path-contains', value: '/shop/el/', language: 'el' },
         { condition: 'path-contains', value: '/shop/hu/', language: 'hu' },
         { condition: 'path-contains', value: '/shop/cs/', language: 'cs' },
-        { condition: 'path-contains', value: '/shop/ro/', language: 'ro' }, */
+        { condition: 'path-contains', value: '/shop/ro/', language: 'ro' },  
 
         
         // General shop for specific languages
@@ -418,8 +418,7 @@ urlLanguageRules: {
         { condition: 'hostname-contains', value: 'dev-rpractice', language: 'en' }, */
 
         
-        // Ultimate fallback - will match any page on your domain
-        { condition: 'url-contains', value: 'dev-rpractice.pantheonsite.io', language: 'en' }
+        
     ]
 },
 
@@ -1068,8 +1067,8 @@ const translations = {
         description: "We use cookies to improve your browsing experience, provide personalized ads or content, and analyze our traffic. By clicking \"Accept All,\" you consent to the use of cookies.",
         privacy: "Privacy Policy",
         customize: "Adjust",
-        reject: "Reject all",
-        accept: "Accept all",
+        reject: "Reject",
+        accept: "Accept",
         essential: "Essential Cookies",
         essentialDesc: "Necessary for website functionality",
         analytics: "Analytics Cookies",
@@ -1136,8 +1135,8 @@ const translations = {
         description: "Wir verwenden Cookies, um Ihr Surferlebnis zu verbessern, personalisierte Anzeigen oder Inhalte bereitzustellen und unseren Datenverkehr zu analysieren. Wenn Sie auf \"Alle akzeptieren\" klicken, erklären Sie sich mit der Verwendung von Cookies einverstanden.",
         privacy: "Datenschutzrichtlinie",
         customize: "Anpassen",
-        reject: "Alle ablehnen",
-        accept: "Alle akzeptieren",
+        reject: "Ablehnen",
+        accept: "Akzeptieren",
         essential: "Essenzielle Cookies",
         essentialDesc: "Für Website-Funktionalität",
         analytics: "Analytics-Cookies",
@@ -1476,8 +1475,8 @@ const translations = {
         description: "Cookie-kat használunk a böngészési élmény javításához, személyre szabott hirdetések vagy tartalom nyújtásához és a forgalmunk elemzéséhez. Az \"Összes elfogadása\" gombra kattintva hozzájárul a cookie-k használatához.",
         privacy: "Adatvédelmi irányelv",
         customize: "Testreszabás",
-        reject: "Összes elutasítása",
-        accept: "Összes elfogadása",
+        reject: "Elutasítása",
+        accept: "Elfogadása",
         essential: "Alapvető Cookie-k",
         essentialDesc: "A weboldal működéséhez szükséges",
         analytics: "Elemző Cookie-k",
@@ -1612,8 +1611,8 @@ const translations = {
         description: "Uporabljamo piškotke za izboljšanje vaše izkušnje brskanja, zagotavljanje prilagojenih oglasov ali vsebin in analizo našega prometa. S klikom na \"Sprejmi vse\" se strinjate z uporabo piškotkov.",
         privacy: "Politika zasebnosti",
         customize: "Prilagodi",
-        reject: "Zavrni vse",
-        accept: "Sprejmi vse",
+        reject: "Zavrni",
+        accept: "Sprejmi",
         essential: "Bistveni piškotki",
         essentialDesc: "Nujni za delovanje spletnega mesta",
         analytics: "Analitični piškotki",
@@ -1680,8 +1679,8 @@ const translations = {
         description: "Koristimo kolačiće za poboljšanje vašeg iskustva pregledavanja, pružanje personaliziranih oglasa ili sadržaja i analizu našeg prometa. Klikom na \"Prihvati sve\" pristajete na korištenje kolačića.",
         privacy: "Politika privatnosti",
         customize: "Prilagodi",
-        reject: "Odbaci sve",
-        accept: "Prihvati sve",
+        reject: "Odbaci",
+        accept: "Prihvati",
         essential: "Osnovni kolačići",
         essentialDesc: "Potrebni za funkcionalnost web stranice",
         analytics: "Analitički kolačići",
