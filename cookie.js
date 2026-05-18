@@ -4913,13 +4913,16 @@ function clearNonEssentialCookies() {
 function applyIncomingConsent() {
     if (!LINKED_DOMAINS.length) return;
 
-    const referrer = document.referrer;
-    const trustedReferrer = LINKED_DOMAINS.some(d => referrer.includes(d));
-    if (!trustedReferrer) return;
-
     const params = new URLSearchParams(window.location.search);
     const gcs = params.get('gcs');
-    if (!gcs) return;
+    const token = params.get('cst'); // security token
+    
+    // Must have both gcs AND matching token to apply
+    if (!gcs || !token) return;
+    
+    // Token must match: simple hash of gcs + secret word
+    const expectedToken = btoa('cookieconsent_' + gcs).replace(/=/g, '');
+    if (token !== expectedToken) return;
 
     const GCS_MAP = {
         'G111': { status: 'accepted',  categories: { functional: true,  analytics: true,  performance: true,  advertising: true  } },
@@ -4967,8 +4970,11 @@ function tagOutboundLinks() {
             const isTrusted = LINKED_DOMAINS.some(d =>
                 url.hostname === d || url.hostname.endsWith('.' + d)
             );
-            if (isTrusted) {
+        if (isTrusted) {
                 url.searchParams.set('gcs', gcs);
+                // Add security token so receiving site knows this is legitimate
+                const token = btoa('cookieconsent_' + gcs).replace(/=/g, '');
+                url.searchParams.set('cst', token);
                 link.href = url.toString();
             }
         } catch(e) {}
@@ -5247,9 +5253,23 @@ function setCookie(name, value, days) {
         date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
         expires = "; expires=" + date.toUTCString();
     }
-    const parts = window.location.hostname.split('.');
-    const rootDomain = parts.length > 2 ? '.' + parts.slice(-2).join('.') : window.location.hostname;
-    document.cookie = name + "=" + (value || "") + expires + "; path=/; domain=" + rootDomain + "; SameSite=Lax; Secure";
+    // Don't set root domain on third-party platforms like myshopify.com
+    // Only set root domain if it's YOUR domain (not a platform subdomain)
+    const hostname = window.location.hostname;
+    const parts = hostname.split('.');
+    const isThirdPartyPlatform = hostname.includes('myshopify.com') || 
+                                  hostname.includes('pantheonsite.io') ||
+                                  hostname.includes('squarespace.com') ||
+                                  hostname.includes('webflow.io');
+    
+    if (isThirdPartyPlatform || parts.length <= 2) {
+        // Just use current domain, no root domain trick
+        document.cookie = name + "=" + (value || "") + expires + "; path=/; SameSite=Lax";
+    } else {
+        // Your own domain — set on root domain for subdomain sharing
+        const rootDomain = '.' + parts.slice(-2).join('.');
+        document.cookie = name + "=" + (value || "") + expires + "; path=/; domain=" + rootDomain + "; SameSite=Lax; Secure";
+    }
 }
 
 function getCookie(name) {
@@ -5307,9 +5327,9 @@ document.addEventListener('DOMContentLoaded', async function() {
 
   
   
-  // Store query parameters on page load
 storeQueryParams();
-applyIncomingConsent(); // ← ADD THIS
+    applyIncomingConsent();
+    tagOutboundLinks(); // ← also tag links on load for returning visitors who already consented
 
     // Check existing consent on page load and apply to Clarity
     const existingConsent = getClarityConsentState();
