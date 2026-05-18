@@ -94,7 +94,7 @@ const config = {
     allowedDomains: [],
     
     // Privacy policy URL (configurable)
-    privacyPolicyUrl: 'https://yourdomain.com/privacy-policy', // Add your full privacy policy URL here
+    privacyPolicyUrl: 'https://orvenyesvolgy.hu/#privacy-policy', // Add your full privacy policy URL here
 
 
 
