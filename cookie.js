@@ -3374,6 +3374,7 @@ function injectConsentHTML(detectedCookies, language = 'en') {
         border-bottom: none;
         margin-bottom: 0;
         padding-bottom: 0;
+        display: none;
     }
 
     /* Toggle Switch Styles */
