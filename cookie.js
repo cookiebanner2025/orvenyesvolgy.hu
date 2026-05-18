@@ -18,8 +18,8 @@ you can change the cookie category description text by this class. like you can 
 
 // ─── Cross-Domain Config ───────────────────────────────────────────────────
 const LINKED_DOMAINS = [
-    'dev-rpractice.pantheonsite.io',        // Replace with your actual domains
-    'practicebdhere.myshopify.com',        // e.g. 'mybrand.com', 'mybrandshop.com'
+    'orvenyesvolgy.hu',        // Replace with your actual domains
+    'www.tixa.hu',        // e.g. 'mybrand.com', 'mybrandshop.com'
 ];
 
 
